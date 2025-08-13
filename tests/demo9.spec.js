@@ -10,3 +10,13 @@ test("Alert test", async ({page})=>{
     });
 
 })
+
+test.only("iFrame test", async ({page})=>{
+  await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
+  const framePage =  page.locator("#courses-iframe");
+  await framePage.locator("li [href*='lifetime-access']:visible").click();
+  const getStringWhole = await framePage.locator(".text h2").textContent();
+  const getUserNumber = getStringWhole.split(" ")[1];
+  console.log(getUserNumber);
+
+})
