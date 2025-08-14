@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../POM/LoginPage';
 import { LoginPage } from '../POM/ProfilePage';
+import { ProfilePage } from '../utils/assertion';
 let webContext;
 let profilePage;
 let loginPage;
@@ -43,12 +44,13 @@ test('Profile page', async () => {
 });
 
 
-// test("Edit profile", async ({})=>{
-//     profilePage = new ProfilePage(page);
-//     await profilePage.goProfileMenu();
-//     //await page.locator(locator.userDropdown.myProfile);
-//     await profilePage.selectProfile();
-//     await profilePage.editButton(); 
-//     const username = await page.locator("input[name='fullName']").inputValue();
-//     console.log(username);
-// })
+test("Edit profile", async ({})=>{
+    const page = await webContext.newPage();
+    profilePage = new ProfilePage(page);
+    await profilePage.goProfileMenu();
+    //await page.locator(locator.userDropdown.myProfile);
+    await profilePage.selectProfile();
+    await profilePage.editButton(); 
+    const username = await page.locator("input[name='fullName']").inputValue();
+    console.log(username);
+})

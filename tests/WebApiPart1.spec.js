@@ -4,33 +4,28 @@ const assertion = require("../utils/assertion");
 
 const USER = credentials.valid.username;
 const PASS = credentials.valid.password;
-// Optional if your API requires them:
-// const CLIENT_ID = process.env.EAGLE_CLIENT_ID!;
-// const CLIENT_SECRET = process.env.EAGLE_CLIENT_SECRET!;
+const baseURL = 'https://dev-api.eaglegpt.ai' 
 
 let accessToken;
 
 test.beforeAll(async () => {
-  const api = await request.newContext({ baseURL: 'https://dev-api.eaglegpt.ai' });
+  const apiRequest = await request.newContext({baseURL});
 
-  const res = await api.post('/authentication/v1/OAuth/Token', {
-    // Most OAuth token endpoints expect x-www-form-urlencoded
+  const response = await apiRequest.post(`${baseURL}/authentication/v1/OAuth/Token`, {
     form: {
       grant_type: 'password',
       username: USER,
       password: PASS,
-      // client_id: CLIENT_ID,
-      // client_secret: CLIENT_SECRET,
     },
-    headers: { Accept: 'application/json' },
+    headers: { Accept: 'application/json','x-blocks-key':'0E446905CE8146C49CC2C0D9FF3A2168' },
   });
 
-  const bodyText = await res.text();
-  expect(res.ok(), `Login failed: ${res.status()} ${bodyText}`).toBeTruthy();
+  const bodyText = await response.text();
+  expect(response.ok(), `Login failed: ${response.status()} ${bodyText}`).toBeTruthy();
 
   const json = JSON.parse(bodyText);
   accessToken = json.access_token;
-  await api.dispose();
+  await apiRequest.dispose();
 });
 
 test('test', async () => {
