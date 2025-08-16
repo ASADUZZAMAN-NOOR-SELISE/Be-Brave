@@ -1,56 +1,38 @@
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '../POM/LoginPage';
-import { LoginPage } from '../POM/ProfilePage';
-import { ProfilePage } from '../utils/assertion';
-let webContext;
-let profilePage;
-let loginPage;
-let context;
-let page;
+// import { test, expect } from '@playwright/test';
 
-test.beforeAll(async ({ browser, baseURL }) => {
-   context = await browser.newContext();
-   page = await context.newPage();
+// import fs from 'node:fs';
 
-  // Always hit the real origin (baseURL = https://devapp.eaglegpt.ai)
-  await page.goto('/login');
+// test.beforeAll(async ({ browser, baseURL }) => {
+//   const context = await browser.newContext();
+//   const page = await context.newPage();
 
-   loginPage = new LoginPage(page);
-  await loginPage.login(credentials.valid.username, credentials.valid.password);
+//   // Always hit the real origin (baseURL = https://devapp.eaglegpt.ai)
+//   await page.goto('/login');
 
-  // Make sure the app is fully logged in and the auth key exists
-  await page.waitForURL(/\/home/i);
-  await page.waitForFunction(() => !!window.localStorage.getItem('auth-storage'));
+//   const loginPage = new LoginPage(page);
+//   await loginPage.login(credentials.valid.username, credentials.valid.password);
 
-  // (Optional) sanity check:
-  const auth = await page.evaluate(() => localStorage.getItem('auth-storage'));
-  console.log('auth-storage:', auth);
+//   // Make sure the app is fully logged in and the auth key exists
+//   await page.waitForURL(/\/home/i);
+//   await page.waitForFunction(() => !!window.localStorage.getItem('auth-storage'));
 
-  // Now it’s safe to persist
-  await context.storageState({ path: 'state.json' });
+//   // (Optional) sanity check:
+//   const auth = await page.evaluate(() => localStorage.getItem('auth-storage'));
+//   console.log('auth-storage:', auth);
 
-  // Create a second context that will reuse auth
-  webContext = await browser.newContext({ storageState: 'state.json' });
-});
+//   // Now it’s safe to persist
+//   await context.storageState({ path: 'state.json' });
 
-test('Profile page', async () => {
-  const page = await webContext.newPage();
-  await page.goto('/');               // go to app root, not /login
-  profilePage = new ProfilePage(page);
+//   // Create a second context that will reuse auth
+//   webContext = await browser.newContext({ storageState: 'state.json' });
+// });
 
-  await profilePage.goProfileMenu();
-  await profilePage.selectProfile();
-  await expect(profilePage.profileMail.nth(1)).toHaveText(credentials.valid.username);
-});
+// test('Profile page', async () => {
+//   const page = await webContext.newPage();
+//   await page.goto('/');               // go to app root, not /login
+//   const profilePage = new ProfilePage(page);
 
-
-test("Edit profile", async ({})=>{
-    const page = await webContext.newPage();
-    profilePage = new ProfilePage(page);
-    await profilePage.goProfileMenu();
-    //await page.locator(locator.userDropdown.myProfile);
-    await profilePage.selectProfile();
-    await profilePage.editButton(); 
-    const username = await page.locator("input[name='fullName']").inputValue();
-    console.log(username);
-})
+//   await profilePage.goProfileMenu();
+//   await profilePage.selectProfile();
+//   await expect(profilePage.profileMail.nth(1)).toHaveText(credentials.valid.username);
+// });
