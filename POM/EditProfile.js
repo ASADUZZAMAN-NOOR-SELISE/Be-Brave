@@ -1,6 +1,4 @@
-
-
-class EditProfile{
+export class EditProfile{
     constructor(page){
         this.page = page ;
         this.homeLanguageLocator = page.getByText('DE', { exact: true });
@@ -17,35 +15,30 @@ class EditProfile{
 
     }
 
-    languageChange(){
-        this.homeLanguageLocator.click();
-        this.englishLocator.click();
+    async languageChange(){
+        await this.homeLanguageLocator.click();
+        await this.englishLocator.click();
 
     }
 
-    profileMenu(){
-        this.profileDropdown.click();
-        this.selectProfile.click();  
+    async profileMenu(){
+        await this.profileDropdown.click();
+        await this.selectProfile.click();  
     }
 
-    editProfile(){
-        this.editButton.click();
-        this.nameInput.fill("New Test Name2");
-        this.editSaveButton.click();
+    async profileEdit(){
+        await this.nameInput.fill("New Test Name2");
+        await this.editSaveButton.click();
 
     }
 
-    crossButtonValidation(){
-        his.editButton.click();
-        this.closeBtn.click();
+    async crossButtonValidation(){
+        await this.editButton.click();
+        await this.closeBtn.click();
     }
 
-    cancelButtonValidation(){
-        his.editButton.click();
-        this.cancelBtn.click();
+    async cancelButtonValidation(){
+        await this.editButton.click();
+        await this.cancelBtn.click();
     }
-
-
-
-
-}
+ }
