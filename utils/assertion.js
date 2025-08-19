@@ -9,6 +9,7 @@ module.exports = {
   },
   url:{
     homeUrl: "/home",
+    loginUrl: "/login",
     profileUrl: "/profile",
 
   },

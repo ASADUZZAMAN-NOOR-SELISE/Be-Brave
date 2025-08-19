@@ -8,60 +8,60 @@ let loginPage;
 let profilePage;
 
 test.beforeEach(async ({page})=>{
-    await page.goto("/login");
+    await page.goto(assertion.url.login);
     loginPage = new LoginPage(page);
 })
 
-test("Empty User Login attempt ", async ({page})=> {
+test("Empty User Login attempt @LOGIN @SMOKE ", async ({page})=> {
     
     await loginPage.login(credentials.invalid.emptyUSer, credentials.valid.password);
     await expect(loginPage.userErrorText).toHaveText(assertion.textLogin.emptyUser);
 })
 
-test("Empty Password Login attempt ", async ({page})=> {
+test("Empty Password Login attempt @LOGIN @SMOKE  ", async ({page})=> {
     
     await loginPage.login(credentials.valid.username, credentials.invalid.emptyPassword);
     await expect(loginPage.passwordErrorText).toHaveText(assertion.textLogin.emptyPassword);
 })
 
-test("Empty User&Password Login attempt ", async ({page})=>{
+test("Empty User&Password Login attempt @LOGIN @SMOKE  ", async ({page})=>{
     
     await loginPage.login(credentials.invalid.emptyUSer, credentials.invalid.emptyPassword);
     await expect(loginPage.userErrorText).toHaveText(assertion.textLogin.emptyUser);
     await expect(loginPage.passwordErrorText).toHaveText(assertion.textLogin.emptyPassword);
 })
 
-test("Invalid user login attempt  ", async ({page})=>{
+test("Invalid user login attempt @LOGIN @SMOKE  ", async ({page})=>{
     
     await loginPage.login(credentials.invalid.wrongMail, credentials.valid.password);
     await expect(loginPage.invalidErrorText).toHaveText(assertion.textLogin.invalidUser);
 })
 
-test("Invalid Password login attempt  ", async ({page})=>{
+test("Invalid Password login attempt @LOGIN  @SMOKE ", async ({page})=>{
 
     await loginPage.login(credentials.valid.username, credentials.invalid.password);
     await expect(loginPage.invalidErrorText).toHaveText(assertion.textLogin.invalidPassword)
 
 })
-test("Short Password login attempt  ", async ({page})=>{
+test("Short Password login attempt  @LOGIN @SMOKE ", async ({page})=>{
   
     await loginPage.login(credentials.valid.username, credentials.invalid.shortPassword);
     await expect(loginPage.passwordErrorText).toHaveText(assertion.textLogin.shortPassword); 
 })
 
-test("Invalid User&Password login attempt  ", async ({page})=>{
+test("Invalid User&Password login attempt @LOGIN @SMOKE ", async ({page})=>{
    
     await loginPage.login(credentials.invalid.wrongMail, credentials.invalid.password);
     await expect(loginPage.invalidErrorText).toHaveText(assertion.textLogin.InvalidUserPassword);
 })
 
-test("Valid Uer&Password Login ", async ({page})=>{
+test("Valid Uer&Password Login @LOGIN ", async ({page})=>{
 
     await loginPage.login(credentials.valid.username, credentials.valid.password);
     await expect(page).toHaveURL(assertion.url.homeUrl);
 })
 
-test(" Profile Manu validation @PROFILE ", async ({page})=>{
+test(" Profile Manu validation @PROFILE @SMOKE ", async ({page})=>{
 
     await loginPage.login(credentials.valid.username, credentials.valid.password);
     await expect(page).toHaveURL(assertion.url.homeUrl);
@@ -90,7 +90,7 @@ test(" Profile Manu validation @PROFILE ", async ({page})=>{
 
 })
 
-test("Edit profile @PROFILE ", async({page})=>{
+test("Edit profile @PROFILE @SMOKE ", async({page})=>{
     await loginPage.login(credentials.valid.username, credentials.valid.password);
     await expect(page).toHaveURL(assertion.url.homeUrl);
     profilePage = new ProfilePage(page);
@@ -124,7 +124,7 @@ test("Edit profile @PROFILE ", async({page})=>{
       
 })
 
-test("About page data validaiton test @PROFILE  ", async ({page})=>{
+test("About page data validaiton test @PROFILE  @SMOKE ", async ({page})=>{
     await loginPage.login(credentials.valid.username, credentials.valid.password);
     await expect(page).toHaveURL(assertion.url.homeUrl);
     profilePage = new ProfilePage(page);
