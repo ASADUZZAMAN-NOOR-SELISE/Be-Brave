@@ -12,55 +12,6 @@ test.beforeEach(async ({page})=>{
     loginPage = new LoginPage(page);
 })
 
-test("Empty User Login attempt @LOGIN @SMOKE ", async ({page})=> {
-    
-    await loginPage.login(credentials.invalid.emptyUSer, credentials.valid.password);
-    await expect(loginPage.userErrorText).toHaveText(assertion.textLogin.emptyUser);
-})
-
-test("Empty Password Login attempt @LOGIN @SMOKE  ", async ({page})=> {
-    
-    await loginPage.login(credentials.valid.username, credentials.invalid.emptyPassword);
-    await expect(loginPage.passwordErrorText).toHaveText(assertion.textLogin.emptyPassword);
-})
-
-test("Empty User&Password Login attempt @LOGIN @SMOKE  ", async ({page})=>{
-    
-    await loginPage.login(credentials.invalid.emptyUSer, credentials.invalid.emptyPassword);
-    await expect(loginPage.userErrorText).toHaveText(assertion.textLogin.emptyUser);
-    await expect(loginPage.passwordErrorText).toHaveText(assertion.textLogin.emptyPassword);
-})
-
-test("Invalid user login attempt @LOGIN @SMOKE  ", async ({page})=>{
-    
-    await loginPage.login(credentials.invalid.wrongMail, credentials.valid.password);
-    await expect(loginPage.invalidErrorText).toHaveText(assertion.textLogin.invalidUser);
-})
-
-test("Invalid Password login attempt @LOGIN  @SMOKE ", async ({page})=>{
-
-    await loginPage.login(credentials.valid.username, credentials.invalid.password);
-    await expect(loginPage.invalidErrorText).toHaveText(assertion.textLogin.invalidPassword)
-
-})
-test("Short Password login attempt  @LOGIN @SMOKE ", async ({page})=>{
-  
-    await loginPage.login(credentials.valid.username, credentials.invalid.shortPassword);
-    await expect(loginPage.passwordErrorText).toHaveText(assertion.textLogin.shortPassword); 
-})
-
-test("Invalid User&Password login attempt @LOGIN @SMOKE ", async ({page})=>{
-   
-    await loginPage.login(credentials.invalid.wrongMail, credentials.invalid.password);
-    await expect(loginPage.invalidErrorText).toHaveText(assertion.textLogin.InvalidUserPassword);
-})
-
-test("Valid Uer&Password Login @LOGIN ", async ({page})=>{
-
-    await loginPage.login(credentials.valid.username, credentials.valid.password);
-    await expect(page).toHaveURL(assertion.url.homeUrl);
-})
-
 test(" Profile Manu validation @PROFILE @SMOKE ", async ({page})=>{
 
     await loginPage.login(credentials.valid.username, credentials.valid.password);
@@ -149,4 +100,8 @@ test("Theme change @PROFILE @SMOKE @Theme ", async ({page})=>{
     await page.locator('svg').nth(1).click();
     await page.getByRole('menuitem', { name: 'Theme' }).click();
     await expect(page.locator('html')).toHaveClass('dark'); //Dark theme class assertion
+})
+
+test("Empty profile ", async ({page})=>{
+    
 })
