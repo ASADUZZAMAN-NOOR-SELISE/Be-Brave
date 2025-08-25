@@ -8,7 +8,7 @@ let loginPage;
 let profilePage;
 
 test.beforeEach(async ({page})=>{
-    await page.goto(assertion.url.login);
+    await page.goto("/login");// goto should use direct url
     loginPage = new LoginPage(page);
 })
 
@@ -138,4 +138,15 @@ test("About page data validaiton test @PROFILE  @SMOKE ", async ({page})=>{
     await expect(page.getByRole('paragraph')).toContainText('Version 1.4.0');
     await expect(page.locator('div').filter({ hasText: /^Close$/ }).getByRole('button')).toBeVisible();
     await page.locator('div').filter({ hasText: /^Close$/ }).getByRole('button').click();
+})
+
+test("Theme change @PROFILE @SMOKE @Theme ", async ({page})=>{
+    await loginPage.login(credentials.valid.username, credentials.valid.password);
+    await expect(page).toHaveURL(assertion.url.homeUrl);
+    profilePage = new ProfilePage(page);
+    await profilePage.setLanguage();
+    await expect(page.getByText('EN', { exact: true })).toBeVisible();
+    await page.locator('svg').nth(1).click();
+    await page.getByRole('menuitem', { name: 'Theme' }).click();
+    await expect(page.locator('html')).toHaveClass('dark'); //Dark theme class assertion
 })
